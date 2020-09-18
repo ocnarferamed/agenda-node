@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
-const Usuario = require('./model');
+const Usuario = require('./userModel');
+const Evento = require('./eventsModel');
 const colors = require('colors');
 const bcrypt = require('bcrypt');
 const bodyParser = require('body-parser');
@@ -28,10 +29,43 @@ mongoose.connect('mongodb://localhost:27017/agendaNodeNext', { useUnifiedTopolog
 app.get('/', (req, res) => {});
 
 
+
 app.get('/signup', (req, res) => {
     res.send('ok');
 });
 
+
+app.get('/events/all', (req,res)=>{
+    let usuarioEvento = req.query.usuario;
+    console.log(usuarioEvento)
+  
+    Evento.find({ "user": usuarioEvento}, function(err, event) {
+        if (err) return console.error(err);
+        console.log(event);
+        res.json(event);
+      });    
+    });
+
+
+app.post('/events/new',(req,res)=>{
+    let body =req.body;
+    let evento = new Evento({
+        user: body.user,
+        title : body.title,
+        start: body.start,
+        end: body.end        
+    });
+
+    
+    evento.save((err,evento)=>{
+            if (err) {
+                return res.status(400).send('Error al guardar evento')
+            }
+            
+            res.send("Evento Creado");
+    
+        });
+});
 
 
 app.post('/signup', (req, res) => {
@@ -49,7 +83,6 @@ app.post('/signup', (req, res) => {
                 err
             });
         }
-
         //usuario.password = null;
         res.send("Creado");
 
@@ -76,9 +109,11 @@ app.post('/login', (req, res) => {
     });
 });
 
+/*
+app.post('/events/delete/:id', (req,res)=>{
 
-
-
+});
+*/
 
 
 
