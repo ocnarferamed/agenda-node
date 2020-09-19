@@ -29,15 +29,15 @@
             <div class="separator"></div>
             <div class="form-inputs">
                 <input type="text" id="titulo" placeholder="Nombre del evento" />
-                <input type="text" id="start_date" placeholder="Fecha de inicio" />
+                <input type="date" id="start_date" placeholder="Fecha de inicio" />
                 <div class="eventDuration">
                     <input type="checkbox" id="allDay" class="radio-input" />
                     <label class="duration-label" for="allDay">Día completo</label>
                 </div>
-                <input type="text" id="end_date" placeholder="Fecha fin" />
+                <input type="date" id="end_date" placeholder="Fecha fin" />
                 <div class="form-group">
-                    <input type="text" id="start_hour" placeholder="Hora de inicio" class="timepicker hour-input left" />
-                    <input type="text" id="end_hour" placeholder="Hora fin" class="timepicker hour-input right" />
+                    <input type="time" id="start_hour" placeholder="Hora de inicio" class="timepicker hour-input left" />
+                    <input type="time" id="end_hour" placeholder="Hora fin" class="timepicker hour-input right" />
                 </div>
                 <button id="save" class="addButton">Añadir evento</button>
             </div>
@@ -51,13 +51,6 @@
             </div>
         </div>
     </div>
-    <!-- <script>
-        var usuarioLog = localStorage.getItem("usuario");
-        $('.headerCalendar').append(`<h4>Hola, ${usuarioLog}</h4>`);
-        
-        
-        
-    </script> -->
     <script src="./js/jquery.js"></script>
     <script src="./js/moment.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>

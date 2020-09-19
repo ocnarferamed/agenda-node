@@ -36,8 +36,7 @@
                 }, function(response) {
                     if (response == "Validado") {
                         localStorage.setItem('user',nombreUsuario.val())  
-                        let eUser= localStorage.getItem("user");
-                        alert(eUser)              
+                        let eUser= localStorage.getItem("user");              
                         window.location.href = "http://localhost:3000/main.html"
                     }else{
                         alert('Usuario y/o contraseña incorrectos');

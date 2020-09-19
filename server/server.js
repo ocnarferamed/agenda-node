@@ -37,11 +37,10 @@ app.get('/signup', (req, res) => {
 
 app.get('/events/all', (req,res)=>{
     let usuarioEvento = req.query.usuario;
-    console.log(usuarioEvento)
+    
   
     Evento.find({ "user": usuarioEvento}, function(err, event) {
-        if (err) return console.error(err);
-        console.log(event);
+        if (err) return console.error(err)
         res.json(event);
       });    
     });
@@ -109,11 +108,45 @@ app.post('/login', (req, res) => {
     });
 });
 
-/*
-app.post('/events/delete/:id', (req,res)=>{
 
+app.post('/events/delete/:id', (req,res)=>{
+    let id = req.params.id;
+Evento.findOneAndDelete({"_id": id}, function (err, docs) { 
+    if (err){ 
+        console.log(err) 
+    } 
+    else{ 
+        console.log("Deleted Event : ", docs); 
+        res.send('Evento eliminado')
+    } 
+}); 
 });
-*/
+
+app.post('/events/update', (req,res)=>{
+    let body = req.body;
+    if(!body.end){
+        Evento.findByIdAndUpdate(body.id,{start : body.start}, (err,doc)=>{
+            if(err) {
+                console.log(err)
+            }else{
+                console.log(`Evento ${doc} actualizado`)
+                res.send('Evento actualizado ')
+            }
+        })
+    }else{
+        Evento.findByIdAndUpdate(body.id,{start : body.start, end: body.end}, (err,doc)=>{
+            if(err) {
+                console.log(err)
+            }else{
+                console.log(`Evento ${doc} actualizado`)
+                res.send('Evento actualizado ')
+            }
+        })
+    }
+    
+})
+
+
 
 
 

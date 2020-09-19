@@ -10,6 +10,7 @@ class EventManager {
     obtenerDataInicial() {
         let url = this.urlBase + "/all"
         let valor = localStorage.getItem("user");
+        $('.formContainer').append(`<h2> Agenda de ${valor} </h2>`)
         let eventoABuscar = {
             usuario : valor
         }
@@ -19,8 +20,27 @@ class EventManager {
         })
     }
 
+    actualizarEvento(evento){
+        if(evento.end === null){
+            let start = moment(evento.start).format('YYYY-MM-DD HH:mm:ss')
+            let eventId = evento._id
+       $.post('/events/update', {id: eventId,  start : start}, (response) => {
+        alert(response)
+        })
+     }else{
+        let start = moment(evento.start).format('YYYY-MM-DD HH:mm:ss')
+        let eventId = evento._id
+        let end = moment(evento.end).format('YYYY-MM-DD HH:mm:ss')
+        $.post('/events/update', {id: eventId,  start : start, end: end}, (response) => {
+         alert(response)
+         })
+     }
+       
+    }
+
+
     eliminarEvento(evento) {
-        let eventId = evento.id
+        let eventId = evento._id
         $.post('/events/delete/'+eventId, {id: eventId}, (response) => {
             alert(response)
         })
@@ -91,7 +111,6 @@ class EventManager {
 
     inicializarCalendario(eventos) {
         var d = moment()
-        console.log(`hola`);
         $('.calendario').fullCalendar({
             header: {
                 left: 'prev,next today',
@@ -124,7 +143,7 @@ class EventManager {
                 if (jsEvent.pageX >= x1 && jsEvent.pageX<= x2 &&
                     jsEvent.pageY >= y1 && jsEvent.pageY <= y2) {
                         this.eliminarEvento(event)
-                        $('.calendario').fullCalendar('removeEvents', event.id);
+                        $('.calendario').fullCalendar('removeEvents', event._id);
                     }
                 }
             })
@@ -134,5 +153,9 @@ class EventManager {
     }
 
     const Manager = new EventManager()
+
+    $('.logout-container').on('click', function(){
+        window.location.href="http://localhost:3000/index.html"
+    })
 
     
