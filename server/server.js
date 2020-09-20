@@ -123,9 +123,9 @@ Evento.findOneAndDelete({"_id": id}, function (err, docs) {
 });
 
 app.post('/events/update', (req,res)=>{
-    let body = req.body;
+    let body = req.body; console.log(body)
     if(!body.end){
-        Evento.findByIdAndUpdate(body.id,{start : body.start}, (err,doc)=>{
+        Evento.findByIdAndUpdate({_id: body.id},{start : body.start}, (err,doc)=>{
             if(err) {
                 console.log(err)
             }else{
@@ -134,7 +134,7 @@ app.post('/events/update', (req,res)=>{
             }
         })
     }else{
-        Evento.findByIdAndUpdate(body.id,{start : body.start, end: body.end}, (err,doc)=>{
+        Evento.findByIdAndUpdate({_id: body.id},{start : body.start, end: body.end}, (err,doc)=>{
             if(err) {
                 console.log(err)
             }else{
